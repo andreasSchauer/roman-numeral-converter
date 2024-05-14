@@ -35,10 +35,6 @@ const romanConverter = (input) => {
   const convertedArr = [];
 
   const conversion = (num) => {
-    if (num <= 0) {
-      return
-    }
-
     switch(true) {
       case num >= 1000:
         convertedArr.push("M");
@@ -116,6 +112,8 @@ const romanConverter = (input) => {
         convertedArr.push("I");
         remainder -= 1;
         conversion(remainder);
+
+      default: return
     }
   }
 
