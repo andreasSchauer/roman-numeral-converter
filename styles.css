@@ -1,5 +1,5 @@
 :root {
-  --font: roboto;
+  --font: roboto, sans-serif;
   --error-light: #FFA1BA;
   --error-dark: #8F002B;
   --blue-1: #003B4D;
