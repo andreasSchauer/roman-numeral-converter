@@ -1,8 +1,11 @@
-"use strict";
-
 const numberInput = document.getElementById("number");
 const convertButton = document.getElementById("convert-btn");
 const output = document.getElementById("output");
+
+const romanNumerals = {
+  1000: "M", 900: "CM", 500: "D", 400: "CD", 100: "C", 90: "XC",
+  50: "L", 40: "XL", 10: "X", 9: "IX", 5: "V", 4: "IV", 1: "I"
+}
 
 const isInputValid = () => {
   output.classList = "hidden";
@@ -32,95 +35,20 @@ const isInputValid = () => {
   numberInput.value = "";
 }
 
+
 const romanConverter = (input) => {
-  let remainder = input;
+  const romanKeys = Object.keys(romanNumerals).toSorted((a,b) => b-a);
   const convertedArr = [];
+  let remainder = input
 
-  const conversion = (num) => {
-    switch(true) {
-      case num >= 1000:
-        convertedArr.push("M");
-        remainder -= 1000;
-        conversion(remainder);
-        break;
-
-      case num >= 900:
-        convertedArr.push("CM");
-        remainder -= 900;
-        conversion(remainder);
-        break;
-
-      case num >= 500:
-        convertedArr.push("D");
-        remainder -= 500;
-        conversion(remainder);
-        break;
-
-      case num >= 400:
-        convertedArr.push("CD");
-        remainder -= 400;
-        conversion(remainder);
-        break;
-
-      case num >= 100:
-        convertedArr.push("C");
-        remainder -= 100;
-        conversion(remainder);
-        break;
-
-      case num >= 90:
-        convertedArr.push("XC");
-        remainder -= 90;
-        conversion(remainder);
-        break;
-
-      case num >= 50:
-        convertedArr.push("L");
-        remainder -= 50;
-        conversion(remainder);
-        break;
-
-      case num >= 40:
-        convertedArr.push("XL");
-        remainder -= 40;
-        conversion(remainder);
-        break;
-
-      case num >= 10:
-        convertedArr.push("X");
-        remainder -= 10;
-        conversion(remainder);
-        break;
-
-      case num >= 9:
-        convertedArr.push("IX");
-        remainder -= 9;
-        conversion(remainder);
-        break;
-
-      case num >= 5:
-        convertedArr.push("V");
-        remainder -= 5;
-        conversion(remainder);
-        break;
-
-      case num >= 4:
-        convertedArr.push("IV");
-        remainder -= 4;
-        conversion(remainder);
-        break;
-
-      case num >= 1:
-        convertedArr.push("I");
-        remainder -= 1;
-        conversion(remainder);
-
-      default: return
+  for(let numeral of romanKeys) {
+    while(remainder >= numeral) {
+      convertedArr.push(romanNumerals[numeral]);
+      remainder -= numeral;
     }
   }
 
-  conversion(remainder);
-  return convertedArr.join("")
+  return convertedArr.join("");
 }
 
 convertButton.addEventListener("click", isInputValid)
