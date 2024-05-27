@@ -2,12 +2,13 @@ const numberInput = document.getElementById("number");
 const convertButton = document.getElementById("convert-btn");
 const output = document.getElementById("output");
 
-const romanNumerals = {
-  1000: "M", 900: "CM", 500: "D", 400: "CD", 100: "C", 90: "XC",
-  50: "L", 40: "XL", 10: "X", 9: "IX", 5: "V", 4: "IV", 1: "I"
-}
+const romanNumerals = new Map([
+  [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+  [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
+  [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]
+]);
 
-const isInputValid = () => {
+const validateInput = () => {
   output.classList = "hidden";
   const input = Number(numberInput.value);
   const integer = Math.floor(numberInput.value);
@@ -29,21 +30,19 @@ const isInputValid = () => {
       break;
       
     default:
-      output.innerText = `${romanConverter(input)}`
-      output.classList = ""   
+      output.innerText = romanConverter(input);
+      output.classList = "";
   }
   numberInput.value = "";
 }
 
-
 const romanConverter = (input) => {
-  const romanKeys = Object.keys(romanNumerals).toSorted((a,b) => b-a);
   const convertedArr = [];
-  let remainder = input
+  let remainder = input;
 
-  for(let numeral of romanKeys) {
+  for(let numeral of romanNumerals.keys()) {
     while(remainder >= numeral) {
-      convertedArr.push(romanNumerals[numeral]);
+      convertedArr.push(romanNumerals.get(numeral));
       remainder -= numeral;
     }
   }
@@ -51,4 +50,4 @@ const romanConverter = (input) => {
   return convertedArr.join("");
 }
 
-convertButton.addEventListener("click", isInputValid)
+convertButton.addEventListener("click", validateInput);
