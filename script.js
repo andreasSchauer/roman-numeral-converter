@@ -33,6 +33,7 @@ const validateInput = () => {
       output.innerText = romanConverter(input);
       output.classList = "";
   }
+  
   numberInput.value = "";
 }
 
